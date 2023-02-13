@@ -20,19 +20,16 @@ function startGame() {
     moveCounter = 0;
     lost = false;
 
-    console.log("Game Started");
-
+    //console.log("Game Started");
     $("#level-title").text("Level 1");
     setTimeout(() => {
         createNewLevel();
     }, 300);
-
     $("div.btn").click(function () {
-        console.log(this.id);
+        //console.log(this.id);
         animateSquare(this.id);
         validMove(this.id);
     })
-
 }
 
 function validMove(clickedSquare) {
@@ -49,12 +46,10 @@ function validMove(clickedSquare) {
     }
     else
         lost = true;
-
-
-    
     if (lost) {
         $("#level-title").text("You Lose! Press Any Key to try Again.");
         gameStarted = false;
+        $("div.btn").unbind();
     }
 }
 
@@ -64,12 +59,13 @@ function createNewLevel() {
     gameArray.push(nextSquare);
     animateSquare(colorArray[nextSquare]);
     moveCounter = 0;
+    $("#level-title").text("Level " + gameArray.length);
 }
 
 function animateSquare(clickedSquare) {
     $("#" + clickedSquare).addClass("pressed");
-    setInterval(() => {
+    setTimeout(() => {
         $("#" + clickedSquare).removeClass("pressed");
-    }, 300);
+    }, 200);
 
 }
