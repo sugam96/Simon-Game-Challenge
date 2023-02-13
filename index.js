@@ -5,9 +5,9 @@ var moveCounter = 0;
 var gameStarted = false;
 var lost = false;
 $(function () {
-    console.log("Here1!");
+    //console.log("Here1!");
     $(document).keydown(function () {
-        console.log("Here2!");
+        //console.log("Here2!");
         if (!gameStarted)
             startGame();
     })
@@ -21,13 +21,12 @@ function startGame() {
     lost = false;
 
     console.log("Game Started");
-    
+
     $("#level-title").text("Level 1");
     setTimeout(() => {
         createNewLevel();
-        
-    }, 300);    
-    
+    }, 300);
+
     $("div.btn").click(function () {
         console.log(this.id);
         animateSquare(this.id);
@@ -36,12 +35,14 @@ function startGame() {
 
 }
 
-function validMove(square) {
-    var color = colorArray[gameArray[moveCounter]];
-    console.log(square, moveCounter, gameArray, color, gameArray[moveCounter]);
-    if (square === color) {
+function validMove(clickedSquare) {
+    var requiredColor = colorArray[gameArray[moveCounter]];
+    //console.log(clickedSquare, moveCounter, gameArray, requiredColor, gameArray[moveCounter]);
+    if (clickedSquare === requiredColor) {
         if (moveCounter === (gameArray.length - 1)) {
-            createNewLevel();
+            setTimeout(() => {
+                createNewLevel();
+            }, 400);
         }
         else
             moveCounter++;
@@ -50,27 +51,25 @@ function validMove(square) {
         lost = true;
 
 
-    if (!lost) {
-
-    }
-    else if (lost) {
+    
+    if (lost) {
         $("#level-title").text("You Lose! Press Any Key to try Again.");
         gameStarted = false;
     }
 }
 
 function createNewLevel() {
-    console.log("Creating New Level");
+    //console.log("Creating New Level");
     var nextSquare = Math.floor(Math.random() * 4);
     gameArray.push(nextSquare);
     animateSquare(colorArray[nextSquare]);
     moveCounter = 0;
 }
 
-function animateSquare(square) {
-    $("#" + square).addClass("pressed");
+function animateSquare(clickedSquare) {
+    $("#" + clickedSquare).addClass("pressed");
     setInterval(() => {
-        $("#" + square).removeClass("pressed");
+        $("#" + clickedSquare).removeClass("pressed");
     }, 300);
 
 }
