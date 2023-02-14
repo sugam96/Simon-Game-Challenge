@@ -27,6 +27,7 @@ function startGame() {
     }, 300);
     $("div.btn").click(function () {
         //console.log(this.id);
+        makeSound(this.id);
         animateSquare(this.id);
         validMove(this.id);
     })
@@ -49,6 +50,7 @@ function validMove(clickedSquare) {
     if (lost) {
         $("#level-title").text("You Lose! Press Any Key to try Again.");
         gameStarted = false;
+        makeSound("wrong");
         $("div.btn").unbind();
     }
 }
@@ -57,6 +59,7 @@ function createNewLevel() {
     //console.log("Creating New Level");
     var nextSquare = Math.floor(Math.random() * 4);
     gameArray.push(nextSquare);
+    makeSound(colorArray[nextSquare]);
     animateSquare(colorArray[nextSquare]);
     moveCounter = 0;
     $("#level-title").text("Level " + gameArray.length);
@@ -68,4 +71,10 @@ function animateSquare(clickedSquare) {
         $("#" + clickedSquare).removeClass("pressed");
     }, 200);
 
+}
+
+function makeSound(sound) {
+    soundURL = "sounds/" + sound + ".mp3"
+    var sound = new Audio(soundURL);
+    sound.play();
 }
